@@ -15,6 +15,16 @@ class Project(models.Model):
 class Task(models.Model):
     name = models.CharField(, max_length=100)
     
+    class Meta:
+        ordering = ['name']
+        
+    def __str__(self) -> str:
+        return self.name
+
+    
+
+    
+
 
 
 # Create your models here.
