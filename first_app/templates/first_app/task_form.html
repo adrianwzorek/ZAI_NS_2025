@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% load crispy_forms_tags %} {% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-12 col-md-8 col-lg-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        {% if task %}
+        <h2 class="card-title mb-4">Edytuj zadanie</h2>
+        {% else %}
+        <h2 class="card-title mb-4">Dodaj nowe zadanie</h2>
+        {% endif %}
+
+        <form method="post">
+          {% csrf_token %} {{ form|crispy }}
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">
+              Zapisz zadanie
+            </button>
+            <a href="{% url 'task_list' %}" class="btn btn-outline-secondary"
+              >Anuluj</a
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

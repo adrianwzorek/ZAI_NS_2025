@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Project(models.Model):
@@ -12,6 +13,9 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("project_detail", kwargs={"pk": self.pk})
 
 
 class Tag(models.Model):
@@ -35,18 +39,23 @@ class Task(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
 
-    status = models.CharField(max_length=10, choices=Status.choices, default=Status.TODO)
+    status = models.CharField(
+        max_length=10, choices=Status.choices, default=Status.TODO
+    )
 
     due_date = models.DateField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    tags=models.ManyToManyField(Tag, blank=True, related_name='tasks')
+    tags = models.ManyToManyField(Tag, blank=True, related_name="tasks")
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ["-created_at"]
 
     def __str__(self) -> str:
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("task_detail", kwargs={"pk": self.pk})
 
 
 # Create your models here.
